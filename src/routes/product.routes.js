@@ -9,7 +9,7 @@ router.post(
   "/",
   [
     body("title").notEmpty().withMessage("Title is required"),
-    body("price").isNumeric().withMessage("Price must be number"),
+    body("price").isFloat({ min: 0 }).withMessage("Price must be a positive number"),
     body("rating")
       .optional()
       .isFloat({ min: 0, max: 5 })
@@ -17,7 +17,11 @@ router.post(
     body("stock")
       .optional()
       .isInt({ min: 0 })
-      .withMessage("Stock must be positive integer")
+      .withMessage("Stock must be positive integer"),
+      body("category")
+  .optional()
+  .isIn(["mobile","laptop","accessory","headphone","tablet"])
+  .withMessage("Invalid category")
   ],
   validateRequest,
   createProduct

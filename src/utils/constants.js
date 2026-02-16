@@ -1,0 +1,13 @@
+module.exports = {
+  MAX_PRICE_NORMALIZATION: 200000,
+
+  RANKING_WEIGHTS: {
+    TEXT: 0.35,
+    RATING: 0.20,
+    RATING_CONFIDENCE: 0.10,
+    SALES: 0.10,
+    PRICE: 0.10,
+    STOCK: 0.10,
+    RETURN_PENALTY: 0.05
+  }
+};

@@ -54,7 +54,8 @@ const productSchema = new mongoose.Schema(
 
     unitsSold: {
       type: Number,
-      default: 0
+      default: 0,
+      index: true
     },
 
     returnRate: {
@@ -87,6 +88,6 @@ const productSchema = new mongoose.Schema(
 
 
 // Creating text index for full-text search on title, description, and brand fields
-productSchema.index({ title: "text", description: "text", brand: "text" });
+productSchema.index({ title: "text", description: "text", brand: "text", price: 1, "metadata.color": 1  });
 
 module.exports = mongoose.model("Product", productSchema);
