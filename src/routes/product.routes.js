@@ -18,10 +18,10 @@ router.post(
       .optional()
       .isInt({ min: 0 })
       .withMessage("Stock must be positive integer"),
-      body("category")
-  .optional()
-  .isIn(["mobile","laptop","accessory","headphone","tablet"])
-  .withMessage("Invalid category")
+    body("category")
+      .optional()
+      .isIn(["mobile","laptop","accessory","headphone","tablet"])
+      .withMessage("Invalid category")
   ],
   validateRequest,
   createProduct

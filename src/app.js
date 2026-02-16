@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const rateLimiter = require("./middlewares/rateLimiter");
 const productRoutes = require("./routes/product.routes");
+const errorHandler = require("./middlewares/errorHandler");
 
 
 const app = express();
@@ -19,5 +20,8 @@ app.use("/api/v1/product", productRoutes);
 app.get("/", (req, res) => {
   res.send("Ecommerce Search Service Running");
 });
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 module.exports = app;
