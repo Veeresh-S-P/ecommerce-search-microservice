@@ -1,6 +1,6 @@
 const Product = require("../models/product.model");
 const { redisClient } = require("../config/redis");
-const parseQuery = require("../services/queryParser.service");
+const {parseQuery} = require("../services/queryParser.service");
 const fuzzyMatch = require("../services/fuzzy.service");
 const { getCache, setCache } = require("../services/cache.service");
 const { RANKING_WEIGHTS, MAX_PRICE_NORMALIZATION } = require("../utils/constants");
