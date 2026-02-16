@@ -242,6 +242,6 @@ With Redis: ~4-10ms
 
 ---
 
-# 📄 License
+## 🏗 System Design Diagram
 
-MIT License
+![E-Commerce Search System Design](./assets/system-design.png)
