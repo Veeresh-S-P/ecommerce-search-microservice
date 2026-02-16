@@ -75,3 +75,5 @@ const parseQuery = (rawQuery) => {
     sortOption
   };
 };
+
+module.exports = { parseQuery };
