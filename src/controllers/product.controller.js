@@ -1,5 +1,5 @@
 const Product = require("../models/product.model");
-const redisClient = require("../config/redis");
+const { redisClient } = require("../config/redis");
 
 // Create Product
 exports.createProduct = async (req, res, next) => {
@@ -28,8 +28,17 @@ exports.searchProducts = async (req, res, next) => {
       });
     }
 
-    
+    const cacheKey = `search:${query.toLowerCase()}`;
 
+    //Check Redis First
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      console.log("Returning from Redis cache");
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
+    //Fetch from MongoDB
     const products = await Product.find(
       { $text: { $search: query } },
       { score: { $meta: "textScore" } }
@@ -38,11 +47,20 @@ exports.searchProducts = async (req, res, next) => {
       .limit(200)
       .lean();
 
-    return res.status(200).json({
+    const responseData = {
       success: true,
       count: products.length,
       data: products
-    });
+    };
+
+    // Store in Redis (5 minutes TTL)
+    await redisClient.set(
+      cacheKey,
+      JSON.stringify(responseData),
+      { EX: 300 }
+    );
+
+    return res.status(200).json(responseData);
 
   } catch (error) {
     next(error);
